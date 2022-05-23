@@ -12,7 +12,7 @@ app.use(express.json());
 
 // running the server
 app.get("/", (req, res) => {
-  res.send("Apparatus Store Server is running...");
+  res.send("Apparatus Store Server is Running...");
 });
 
 // listening port
