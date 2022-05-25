@@ -25,6 +25,9 @@ async function run() {
     const productsCollection = client
       .db("Apparatus-Store")
       .collection("products");
+    const reviewsCollection = client
+      .db("Apparatus-Store")
+      .collection("reviews");
 
     // POST (Product)
     app.post("/product", async (req, res) => {
@@ -46,6 +49,13 @@ async function run() {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
       const result = await productsCollection.findOne(query);
+      res.send(result);
+    });
+
+    // POST (Review)
+    app.post("/review", async (req, res) => {
+      const data = req.body;
+      const result = await reviewsCollection.insertOne(data);
       res.send(result);
     });
   } finally {
