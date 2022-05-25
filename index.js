@@ -29,6 +29,7 @@ async function run() {
       .db("Apparatus-Store")
       .collection("reviews");
     const ordersCollection = client.db("Apparatus-Store").collection("orders");
+    const usersCollection = client.db("Apparatus-Store").collection("users");
 
     // POST (Product)
     app.post("/product", async (req, res) => {
@@ -77,8 +78,16 @@ async function run() {
     // GET One Order by Email
     app.get("/order/:email", async (req, res) => {
       const email = req.params.email;
-      const query = { email: email };
-      const result = await ordersCollection.find(query).toArray();
+      const filter = { email: email };
+      const result = await ordersCollection.find(filter).toArray();
+      res.send(result);
+    });
+
+    // DELETE (Order)
+    app.delete("/order/:email", async (req, res) => {
+      const email = req.params.email;
+      const filter = { email: email };
+      const result = await doctorCollection.deleteOne(filter);
       res.send(result);
     });
 
@@ -86,6 +95,13 @@ async function run() {
     app.post("/order", async (req, res) => {
       const data = req.body;
       const result = await ordersCollection.insertOne(data);
+      res.send(result);
+    });
+
+    // POST (User)
+    app.post("/user", async (req, res) => {
+      const data = req.body;
+      const result = await usersCollection.insertOne(data);
       res.send(result);
     });
   } finally {
