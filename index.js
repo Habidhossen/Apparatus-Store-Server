@@ -67,7 +67,14 @@ async function run() {
       res.send(result);
     });
 
-    // POST (Review)
+    // GET (Order)
+    app.get("/order", async (req, res) => {
+      const query = req.query;
+      const result = await ordersCollection.find(query).toArray();
+      res.send(result);
+    });
+
+    // POST (Order)
     app.post("/order", async (req, res) => {
       const data = req.body;
       const result = await ordersCollection.insertOne(data);
