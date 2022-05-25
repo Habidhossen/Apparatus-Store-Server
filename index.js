@@ -58,6 +58,13 @@ async function run() {
       const result = await reviewsCollection.insertOne(data);
       res.send(result);
     });
+
+    // GET (Product)
+    app.get("/review", async (req, res) => {
+      const query = req.query;
+      const result = await reviewsCollection.find(query).toArray();
+      res.send(result);
+    });
   } finally {
   }
 }
