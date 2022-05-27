@@ -106,10 +106,40 @@ async function run() {
       res.send(result);
     });
 
-    // POST (User)
-    app.post("/user", async (req, res) => {
+    // POST or UPDATE (User)
+    app.put("/user/:email", async (req, res) => {
+      // const data = req.body;
+      // const result = await usersCollection.insertOne(data);
+      // res.send(result);
       const data = req.body;
-      const result = await usersCollection.insertOne(data);
+      const email = req.params.email;
+      const filter = { email: email };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          ...data,
+        },
+      };
+      const result = await usersCollection.updateOne(
+        filter,
+        updateDoc,
+        options
+      );
+      res.send(result);
+    });
+
+    // GET (Order)
+    app.get("/user", async (req, res) => {
+      const query = req.query;
+      const result = await usersCollection.find(query).toArray();
+      res.send(result);
+    });
+
+    // GET One User by Email
+    app.get("/user/:email", async (req, res) => {
+      const email = req.params.email;
+      const filter = { email: email };
+      const result = await usersCollection.findOne(filter);
       res.send(result);
     });
   } finally {
