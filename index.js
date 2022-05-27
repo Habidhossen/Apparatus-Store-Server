@@ -83,6 +83,14 @@ async function run() {
       res.send(result);
     });
 
+    // GET One Order by ID
+    app.get("/order/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await ordersCollection.findOne(query);
+      res.send(result);
+    });
+
     // GET One Order by Email
     app.get("/order/:email", async (req, res) => {
       const email = req.params.email;
