@@ -3,6 +3,7 @@ const cors = require("cors");
 require("dotenv").config();
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const ObjectId = require("mongodb").ObjectId;
+const jwt = require("jsonwebtoken");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
@@ -135,7 +136,6 @@ async function run() {
           transactionId: payment.transactionId,
         },
       };
-
       const result = await paymentCollection.insertOne(payment);
       const updatedOrder = await ordersCollection.updateOne(filter, updatedDoc);
       res.send(updatedOrder);
@@ -183,6 +183,25 @@ async function run() {
       const filter = { email: email };
       const result = await usersCollection.findOne(filter);
       res.send(result);
+    });
+
+    // Make Admin
+    app.put("/user/admin/:email", async (req, res) => {
+      const email = req.params.email;
+      const filter = { email: email };
+      const updateDoc = {
+        $set: { role: "admin" },
+      };
+      const result = await usersCollection.updateOne(filter, updateDoc);
+      res.send(result);
+    });
+
+    // GET Admin by Email and Admin-Role
+    app.get("/admin/:email", async (req, res) => {
+      const email = req.params.email;
+      const user = await usersCollection.findOne({ email: email });
+      const isAdmin = user?.role === "admin";
+      res.send({ admin: isAdmin });
     });
   } finally {
   }
