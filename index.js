@@ -9,13 +9,17 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 // middleware
 // app.use(cors());
-app.use(
-  cors({
-    origin: true,
-    optionsSuccessStatus: 200,
-    credentials: true,
-  })
-);
+
+// app.use(
+//   cors({
+//     origin: true,
+//     optionsSuccessStatus: 200,
+//     credentials: true,
+//   })
+// );
+
+app.use(cors({ origin: "*", methods: ["GET", "POST", "PUT", "PATCH"] }));
+
 app.use(express.json());
 
 // mongoDB drive code
