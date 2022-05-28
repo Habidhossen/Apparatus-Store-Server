@@ -1,15 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
+const port = process.env.PORT || 5000;
+const app = express();
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const ObjectId = require("mongodb").ObjectId;
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-const app = express();
-const port = process.env.PORT || 5000;
-
 // middleware
-// app.use(cors());
+app.use(cors());
 // const corsConfig = {
 //   origin: true,
 //   Credentials: true,
@@ -17,21 +16,21 @@ const port = process.env.PORT || 5000;
 // app.use(cors(corsConfig));
 // app.options("*", cors(corsConfig));
 
-const corsConfig = {
-  origin: "*",
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE"],
-};
-app.use(cors(corsConfig));
-app.options("*", cors(corsConfig));
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept,authorization"
-  );
-  next();
-});
+// const corsConfig = {
+//   origin: "*",
+//   credentials: true,
+//   methods: ["GET", "POST", "PUT", "DELETE"],
+// };
+// app.use(cors(corsConfig));
+// app.options("*", cors(corsConfig));
+// app.use(function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept,authorization"
+//   );
+//   next();
+// });
 
 app.use(express.json());
 
