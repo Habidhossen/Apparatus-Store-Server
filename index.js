@@ -132,7 +132,7 @@ async function run() {
     });
 
     // GET One Order by Email
-    app.get("/order/:email", async (req, res) => {
+    app.get("/order", async (req, res) => {
       const email = req.params.email;
       const filter = { email: email };
       const result = await ordersCollection.find(filter).toArray();
