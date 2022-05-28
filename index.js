@@ -18,7 +18,9 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 //   })
 // );
 
-app.use(cors({ origin: "*", methods: ["GET", "POST", "PUT", "PATCH"] }));
+app.use(
+  cors({ origin: "*", methods: ["GET", "POST", "PUT", "PATCH", "DELETE"] })
+);
 
 app.use(express.json());
 
