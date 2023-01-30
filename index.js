@@ -88,7 +88,7 @@ async function run() {
       res.send(result);
     });
 
-    // GET (Product)
+    // GET (Review)
     app.get("/review", async (req, res) => {
       const query = req.query;
       const result = await reviewsCollection.find(query).toArray();
@@ -170,7 +170,7 @@ async function run() {
       res.send(result);
     });
 
-    // GET (Order)
+    // GET (User)
     app.get("/user", async (req, res) => {
       const query = req.query;
       const result = await usersCollection.find(query).toArray();
