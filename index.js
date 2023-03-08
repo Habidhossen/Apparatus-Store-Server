@@ -28,6 +28,7 @@ async function run() {
     const productsCollection = client
       .db("Apparatus-Store")
       .collection("products");
+    const blogsCollection = client.db("Apparatus-Store").collection("blogs");
     const reviewsCollection = client
       .db("Apparatus-Store")
       .collection("reviews");
@@ -78,6 +79,37 @@ async function run() {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
       const result = await productsCollection.deleteOne(query);
+      res.send(result);
+    });
+
+    // POST (Blog)
+    app.post("/blog", async (req, res) => {
+      const data = req.body;
+      const result = await blogsCollection.insertOne(data);
+      res.send(result);
+    });
+
+    // GET (Blog)
+    app.get("/blog", async (req, res) => {
+      const query = req.query;
+      const cursor = blogsCollection.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
+    // GET One Blog by ID
+    app.get("/blog/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await blogsCollection.findOne(query);
+      res.send(result);
+    });
+
+    // DELETE (Blog)
+    app.delete("/blog/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await blogsCollection.deleteOne(query);
       res.send(result);
     });
 
