@@ -180,25 +180,10 @@ async function run() {
       res.send(result);
     });
 
-    // POST or UPDATE (User)
-    app.put("/user/:email", async (req, res) => {
-      // const data = req.body;
-      // const result = await usersCollection.insertOne(data);
-      // res.send(result);
+    // POST (User)
+    app.put("/user", async (req, res) => {
       const data = req.body;
-      const email = req.params.email;
-      const filter = { email: email };
-      const options = { upsert: true };
-      const updateDoc = {
-        $set: {
-          ...data,
-        },
-      };
-      const result = await usersCollection.updateOne(
-        filter,
-        updateDoc,
-        options
-      );
+      const result = await usersCollection.insertOne(data);
       res.send(result);
     });
 
